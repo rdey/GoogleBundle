@@ -22,7 +22,7 @@
     {% for key, tracker in google_analytics.trackers %}
         ga('create', '{{ tracker.accountId }}', {
             {% if tracker.domain %}
-                'cookieName': '{{ tracker.domain }}',
+                'cookieDomain': '{{ tracker.domain }}',
             {% endif -%}
 
             {% set siteSpeedSampleRate = google_analytics.getSiteSpeedSampleRate(key) %}
