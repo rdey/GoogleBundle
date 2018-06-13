@@ -1,0 +1,31 @@
+{% for key, tracker in google_analytics.trackers %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ tracker.accountId }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+    </script>
+
+
+    <script>
+        gtag('config', '{{ tracker.accountId }}', {
+            'custom_map': {
+                {% if google_analytics.hasCustomVariables %}
+                    {% for customVariable in google_analytics.customVariables %}
+                        'dimension{{ customVariable.index }}': '{{ customVariable.name }}',
+                    {% endfor %}
+                {% endif %}
+            }
+        });
+
+        {% if google_analytics.hasCustomVariables %}
+            {% for customVariable in google_analytics.customVariables %}
+                gtag('event', '{{ google_analytics.trackerName(key) }}set',
+                    {'dimension{{ customVariable.index }}': '{{ customVariable.value }}'}
+                );
+            {% endfor %}
+        {% endif %}
+    </script>
+{% endfor %}
