@@ -18,6 +18,13 @@
                     {% endfor %}
                 {% endif %}
             }
+            {% if google_analytics.getAllowLinker(key) %}
+            , 'linker': {
+                {% for linker in tracker.linker_domains %}
+                    '{{ linker }}',
+                {% endfor %}
+            }
+            {% endif %}
         });
 
         {% if google_analytics.hasCustomVariables %}
