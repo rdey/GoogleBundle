@@ -13,17 +13,13 @@
         gtag('config', '{{ tracker.accountId }}', {
             'custom_map': {
                 {% if google_analytics.hasCustomVariables %}
-                    {% for customVariable in google_analytics.customVariables %}
-                        'dimension{{ customVariable.index }}': '{{ customVariable.name }}'{% if not loop.last %},{% endif %}
-                    {% endfor %}
+                    {% for customVariable in google_analytics.customVariables %}'dimension{{ customVariable.index }}': '{{ customVariable.name }}'{% if not loop.last %}, {% endif %}{% endfor %}
                 {% endif %}
             }
             {% if google_analytics.getAllowLinker(key) %}
             , 'linker': {
                 'domains': [
-                {% for linker in tracker.linker_domains %}
-                    '{{ linker }}'{% if not loop.last %},{% endif %}
-                {% endfor %}
+                {% for linker in tracker.linker_domains %}'{{ linker }}'{% if not loop.last %}, {% endif %}{% endfor %}
                 ]
             }
             {% endif %}
