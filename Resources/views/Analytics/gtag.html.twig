@@ -20,9 +20,11 @@
             }
             {% if google_analytics.getAllowLinker(key) %}
             , 'linker': {
+                'domains': [
                 {% for linker in tracker.linker_domains %}
                     '{{ linker }}'{% if not loop.last %},{% endif %}
                 {% endfor %}
+                ]
             }
             {% endif %}
         });
