@@ -19,17 +19,9 @@
             <argument>%google.analytics.dashboard%</argument>
         </service>
 
-        <service id="templating.helper.google_analytics" class="AntiMattr\GoogleBundle\Helper\AnalyticsHelper">
-            <tag name="templating.helper" alias="google_analytics" />
-            <argument type="service" id="google.analytics" />
-            <argument>%google.analytics.js_source_https%</argument>
-            <argument>%google.analytics.js_source_http%</argument>
-            <argument>%google.analytics.js_source_endpoint%</argument>
-        </service>
-
         <service id="twig.extension.google_analytics" class="AntiMattr\GoogleBundle\Extension\AnalyticsExtension" public="false">
             <tag name="twig.extension" />
-            <argument type="service" id="templating.helper.google_analytics" />
+            <argument type="service" id="google.analytics" />
         </service>
 	</services>
 

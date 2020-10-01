@@ -16,9 +16,7 @@ class GoogleExtension extends Extension
     public function load(array $configs, ContainerBuilder $container)
     {
         $modules = array(
-            'adwords' => array(),
             'analytics' => array(),
-            'maps' => array(),
         );
 
         foreach ($configs as $config) {
@@ -32,22 +30,6 @@ class GoogleExtension extends Extension
         foreach (array_keys($modules) as $module) {
             if (!empty($modules[$module])) {
                 call_user_func(array($this, $module . 'Load'), $modules[$module], $container);
-            }
-        }
-    }
-
-    /**
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     */
-    private function adwordsLoad(array $configs, ContainerBuilder $container)
-    {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('adwords.xml');
-
-        foreach ($configs as $config) {
-            if (isset($config['conversions'])) {
-                $container->setParameter('google.adwords.conversions', $config['conversions']);
             }
         }
     }
@@ -79,22 +61,6 @@ class GoogleExtension extends Extension
             }
             if (isset($config['js_source_endpoint'])) {
                 $container->setParameter('google.analytics.js_source_endpoint', $config['js_source_endpoint']);
-            }
-        }
-    }
-
-    /**
-     * @param array            $configs
-     * @param ContainerBuilder $container
-     */
-    private function mapsLoad(array $configs, ContainerBuilder $container)
-    {
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('maps.xml');
-
-        foreach ($configs as $config) {
-            if (isset($config['config'])) {
-                $container->setParameter('google.maps.config', $config['config']);
             }
         }
     }
